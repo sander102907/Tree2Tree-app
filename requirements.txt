@@ -1,0 +1,5 @@
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torch==1.8.1+cpu
+Flask==2.0.1
+git+git://github.com/sander102907/autoencoder_program_synthesis.git
+gunicorn==20.1.0
