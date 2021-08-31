@@ -7,19 +7,16 @@ from cpp_ast_parser.utils import add_includes_usings
 import os
 import subprocess
 
+with open('../.libclang') as f:
+    libclang_path = f.read()
+
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
 
-
-libclang_path = '/usr/lib/x86_64-linux-gnu/libclang-6.0.so.1'
-# libclang_path = '.apt/usr/lib/x86_64-linux-gnu/libclang-10.so.1'
-checkpoint_path = 'model_checkpoints/1/'
-
-tree2tree = Tree2Tree(libclang_path, checkpoint_path)
-
+tree2tree = Tree2Tree(libclang_path, '../model')
 
 @app.route('/api/mutate', methods=['POST'])
 def mutate():

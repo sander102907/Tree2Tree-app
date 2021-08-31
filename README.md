@@ -3,7 +3,7 @@ A dedicated dedicated website for demonstrating the principles shown in the pape
 **Autoencoders as Tools for Program Synthesis**
 
 ## Requirements
-You need to install three packages on your machine:
+You need to install the following packages on your machine:
 
 - [Node.js](https://nodejs.org/)
 - [Yarn](https://yarnpkg.com/)
@@ -16,10 +16,16 @@ Furthermore, install the packages from the requirements.txt file:
 `pip install -r requirements.txt`
 
 ## Set up
-- Download a pretrained model checkpoint from [here](https://surfdrive.surf.nl/files/index.php/s/67fYIcTBpRXCoHV/download). Unzip the contents in a folder within the project and set the path to the folder in `api/api.py` for the variable `checkpoint_path`
-- Locate the clang libclang.so library file on your machine (often under /usr/lib/x86_64-linux-gnu/libclang-6.0.so.1) and set the path in `api/api.py` for the variable `libclang_path`
-- Run `yarn install` to install all required packages from package.json
-- Run `yarn build` to build the app for production to the `build` folder
+
+Make sure that the dependencies listed above are installed, then run
+
+```
+make
+```
+
+Verify that the file `.libclang` holds the correct path of libclang.so library file on your machine.
+`make` tries to determine its location automatically, but mistakes can happen.
+Edit if necessary.
 
 ## Start the app
 - The app can be started by running `cd api && flask run`
