@@ -13,7 +13,7 @@ You need to install three packages on your machine:
 
 Furthermore, install the packages from the requirements.txt file:
 
-`pip install requirements.txt`
+`pip install -r requirements.txt`
 
 ## Set up
 - Download a pretrained model checkpoint from [here](https://surfdrive.surf.nl/files/index.php/s/67fYIcTBpRXCoHV/download). Unzip the contents in a folder within the project and set the path to the folder in `api/api.py` for the variable `checkpoint_path`
