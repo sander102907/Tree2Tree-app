@@ -9,5 +9,5 @@ node_modules:
 .libclang:
 	 ls -1v /usr/lib/*/libclang* | grep -x '.*libclang[0-9\-]*\.so' | tail -n 1 > .libclang
 
-build: node_modules
+build: node_modules src
 	yarn build
