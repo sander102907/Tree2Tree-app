@@ -25,6 +25,7 @@ export default function DecodeTab({ latentVector, setLatentVector }) {
     const [loading, setLoading] = useState(false);
     const [compilesLoading, setCompilesLoading] = useState(true);
     const [compiles, setCompiles] = useState();
+    const [binaryName, setBinaryName] = useState('');
     const [revealImports, setRevealImports] = useState(false);
 
 
@@ -61,6 +62,11 @@ export default function DecodeTab({ latentVector, setLatentVector }) {
         if (outProgram.length > 0) {
             setCompilesLoading(true);
 
+            if (binaryName != '') {
+                fetch('/api/programs/' + binaryName, {method: 'DELETE'})
+                setBinaryName('')
+            }
+
             setOutProgramFinal(outProgram);
             console.log('outprogram: ' + outProgram)
 
@@ -70,11 +76,12 @@ export default function DecodeTab({ latentVector, setLatentVector }) {
                 body: JSON.stringify({program: outProgram})
             }
 
-            fetch('/api/compiles', requestOptions)
-            .then(res => res.json())
-            .then(data => {
-                setCompiles(data.compiles);
+            fetch('/api/programs', requestOptions)
+            .then(res => {
+                setCompiles(res.ok);
                 setCompilesLoading(false);
+
+                if (res.ok) setBinaryName(res.json().binary);
             });
         }
     }, [outProgram]);
