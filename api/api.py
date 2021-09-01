@@ -8,7 +8,7 @@ import os
 import subprocess
 
 with open('../.libclang') as f:
-    libclang_path = f.read()
+    libclang_path = f.read().strip()
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
