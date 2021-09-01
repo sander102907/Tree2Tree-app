@@ -23,7 +23,7 @@ Make sure that the dependencies listed above are installed, then run
 make
 ```
 
-Verify that the file `.libclang` holds the correct path of libclang.so library file on your machine.
+Verify that the file `.libclang` holds the correct path to libclang.so library file on your machine.
 `make` tries to determine its location automatically, but mistakes can happen.
 Edit if necessary.
 
