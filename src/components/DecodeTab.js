@@ -81,7 +81,7 @@ export default function DecodeTab({ latentVector, setLatentVector }) {
                 setCompiles(res.ok);
                 setCompilesLoading(false);
 
-                if (res.ok) setBinaryName(res.json().binary);
+                if (res.ok) res.json().then(json => setBinaryName(json.binary));
             });
         }
     }, [outProgram]);
