@@ -6,21 +6,24 @@ from autoencoder_program_synthesis.t2t_vae import Tree2Tree
 from cpp_ast_parser.utils import add_includes_usings
 import os
 import subprocess
+from pathlib import Path
 
 from uuid import uuid4, UUID
 def uuid():
     return str(uuid4())
 
-with open('../.libclang') as f:
+project_path = Path(__file__).parent.parent
+
+with open(project_path / '.libclang') as f:
     libclang_path = f.read().strip()
 
-app = Flask(__name__, static_folder='../build', static_url_path='/')
+app = Flask(__name__, static_folder=project_path / 'build', static_url_path='/')
 
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
 
-tree2tree = Tree2Tree(libclang_path, '../model')
+tree2tree = Tree2Tree(libclang_path, project_path / 'model')
 
 @app.route('/api/mutate', methods=['POST'])
 def mutate():
@@ -56,14 +59,17 @@ def compile(program, binary_name):
     imports = ['using namespace std;', '#include <vector>', '#include <iostream>', '#include <string>',
         '#include <cstring>', '#include <queue>', '#include <stdio.h>', '#include <math.h>', '#include <map>', '#include <set>', '#include <stack>']
 
-    with open('tmp.cpp', 'w') as f:
+    tmpfile_path = project_path / 'tmp.cpp'
+    binary_path = project_path / 'binaries' / binary_name
+
+    with open(tmpfile_path, 'w') as f:
         f.write(program)
 
-    add_includes_usings('tmp.cpp', imports)
-    subprocess.call(['g++', 'tmp.cpp', '-o', binary_name], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    add_includes_usings(str(tmpfile_path), imports)
+    subprocess.call(['g++', str(tmpfile_path), '-o', str(binary_path)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-    os.remove('tmp.cpp')
-    if os.path.isfile(binary_name):
+    tmpfile_path.unlink()
+    if binary_path.is_file():
         return {'binary': binary_name}, 200      
     else:
         return {}, 400
@@ -89,15 +95,16 @@ def delete_program(binary_name):
     except ValueError:
         return {'error': 'Malformed binary name'}, 404
 
-    os.remove(binary_name)
+    (project_path / 'binaries' / binary_name).unlink()
     return {}
 
 @app.route('/api/programs/<binary_name>/run', methods=['POST'])
 def run_program(binary_name):
     if request.method == 'POST':
         input_string = request.json['input']
+        binary_path = project_path / 'binaries' / binary_name
 
-        process = subprocess.Popen([os.path.realpath(binary_name)], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process = subprocess.Popen([str(binary_path)], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, err = process.communicate(input_string.encode())
         
         if err:

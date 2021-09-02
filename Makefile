@@ -7,7 +7,7 @@ node_modules:
 	yarn install
 
 .libclang:
-	 ls -1v /usr/lib/*/libclang* | grep -x '.*libclang[0-9\-]*\.so' | tail -n 1 > .libclang
+	ls -1v /usr/lib/*/libclang* | grep -x '.*libclang[-.0123456789]*.so' | tail -n 1 > .libclang
 
 build: node_modules src
 	yarn build
