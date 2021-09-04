@@ -90,26 +90,6 @@ function App() {
           A Tree-based VAE-RNN autoencoder for C++
         </Typography>
           <div>
-          <Button
-          variant="outline"
-          color="inherit"
-          startIcon={<BookIcon />}
-          href="https://arxiv.org/abs/2108.07129"
-          target="_blank"
-          rel="noreferrer"
-          >
-          Paper
-          </Button>
-          <Button
-            variant="outline"
-            color="inherit"
-            startIcon={<GitHubIcon />}
-            href="https://github.com/sander102907/autoencoder_program_synthesis/"
-            target="_blank"
-            rel="noreferrer"
-          >
-          Source Code
-          </Button>
         </div>
       </header>
       </Box>
