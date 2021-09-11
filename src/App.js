@@ -82,11 +82,11 @@ function App() {
       <div className="App">
       <Box boxShadow={10}>
         <header className="App-header">
-        <Typography variant="h3" component="h1">
+        <Typography variant="h4" component="h1">
           Tree2Tree
         </Typography>
 
-        <Typography variant="h5" component="h1">
+        <Typography variant="h6" component="h1">
           A Tree-based VAE-RNN autoencoder for C++
         </Typography>
           <div>
@@ -108,10 +108,10 @@ function App() {
         index={tab}
         onChangeIndex={changeTabIndex}
       >
-        <TabPanel value={tab} index={0} dir={theme.direction}>
+        <TabPanel value={tab} index={0} dir={theme.direction} style={{minWidth: '1800px', width: 'fit-content'}}>
           <MutateTab setTab={setTab} setLatentVector={setLatentVector} />
         </TabPanel>
-        <TabPanel value={tab} index={1} dir={theme.direction}>
+        <TabPanel value={tab} index={1} dir={theme.direction} style={{minWidth: '1800px', width: 'fit-content'}}>
           <DecodeTab latentVector={latentVector} setLatentVector={setLatentVector} />
         </TabPanel>
       </SwipeableViews>
